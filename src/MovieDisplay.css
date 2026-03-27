@@ -1,0 +1,176 @@
+:root {
+  --md-primary: #e50914;
+  --md-bg-dark: #000;
+  --md-text-light: #fff;
+  --md-text-muted: #aaa;
+}
+
+/* =============================== */
+/* 🎬 MOVIE DISPLAY PAGE */
+/* =============================== */
+
+.md-page {
+  background: var(--md-bg-dark);
+  color: var(--md-text-light);
+  height: 100vh;
+  position: relative;
+}
+
+/* ===== BACK BUTTON ===== */
+
+.md-back-btn {
+  position: fixed;
+  top: 20px;
+  right: 30px;
+  background: var(--md-primary);
+  color: var(--md-text-light);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 20;
+}
+
+/* ===== HERO ===== */
+
+.md-hero {
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+/* SIMPLE OVERLAY */
+
+.md-hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* ===== HERO CONTENT ===== */
+
+.md-hero-content {
+  position: absolute;
+  bottom: 15%;
+  left: 5%;
+  max-width: 600px;
+  z-index: 2;
+}
+
+.md-title {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.md-overview {
+  color: var(--md-text-muted);
+  line-height: 1.5;
+  font-size: 1rem;
+}
+
+/* ===== PLAY BUTTON ===== */
+
+.md-play-btn {
+  margin-top: 1.5rem;
+  padding: 10px 24px;
+  background: var(--md-primary);
+  border: none;
+  color: var(--md-text-light);
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* ===== TRAILER OVERLAY ===== */
+
+.md-trailer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.md-trailer-overlay iframe {
+  width: 80%;
+  height: 60%;
+  border: 1px solid var(--md-primary);
+}
+
+/* ===== SHIMMER ===== */
+
+.md-shimmer {
+  height: 100vh;
+  background: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.md-shimmer-text {
+  color: var(--md-primary);
+  font-size: 3rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+/* ===== ERROR ===== */
+
+.md-error {
+  text-align: center;
+  color: var(--md-primary);
+  font-size: 1.5rem;
+  padding-top: 3rem;
+}
+
+/* =============================== */
+/* 📱 RESPONSIVE */
+/* =============================== */
+
+@media (max-width: 768px) {
+  .md-hero {
+    height: 85vh;
+  }
+
+  .md-hero-content {
+    left: 4%;
+    bottom: 12%;
+  }
+
+  .md-title {
+    font-size: 2rem;
+  }
+
+  .md-trailer-overlay iframe {
+    width: 90%;
+    height: 50%;
+  }
+}
+
+@media (max-width: 500px) {
+  .md-hero {
+    height: 80vh;
+  }
+
+  .md-title {
+    font-size: 1.5rem;
+  }
+
+  .md-overview {
+    font-size: 0.85rem;
+  }
+
+  .md-play-btn {
+    width: 100%;
+  }
+}
