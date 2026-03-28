@@ -27,6 +27,13 @@ const MoviesDisplay = () => {
       );
 
       const data = await res.json();
+
+      // ✅ SAFE CHECK
+      if (!data || data.success === false) {
+        setError('Failed to load movie details');
+        return;
+      }
+
       setMovie(data);
     } catch {
       setError('Failed to load movie details');

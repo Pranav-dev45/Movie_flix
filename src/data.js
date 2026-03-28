@@ -52,3 +52,4 @@ export const options = {
     accept: "application/json",
   },
 };
+console.log("API KEY:", API_KEY);

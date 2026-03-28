@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { BASE_URL, API_KEY } from '../data';
 import LanguageContext from '../contexts/LanguageContext';
 
-
 const AllMovies = () => {
   const navigate = useNavigate();
   const { language } = useContext(LanguageContext);
@@ -34,15 +33,17 @@ const AllMovies = () => {
       const topRatedData = await topRatedRes.json();
       const upcomingData = await upcomingRes.json();
 
-      setNowPlaying(nowPlayingData.results);
-      setPopular(popularData.results);
-      setTopRated(topRatedData.results);
-      setUpcoming(upcomingData.results);
+      // ✅ SAFE FALLBACKS (VERY IMPORTANT)
+      setNowPlaying(nowPlayingData.results || []);
+      setPopular(popularData.results || []);
+      setTopRated(topRatedData.results || []);
+      setUpcoming(upcomingData.results || []);
     } catch (err) {
       setError('⚠️ Failed to load movies');
     } finally {
       setLoading(false);
     }
+
     console.log("API KEY:", API_KEY);
   };
 
@@ -57,7 +58,11 @@ const AllMovies = () => {
           <div key={movie.id} className="row-card">
             <Link to={`/movie/${movie.id}`}>
               <img
-                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                src={
+                  movie.poster_path
+                    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                    : "https://via.placeholder.com/300x450"
+                }
                 alt={movie.title}
               />
             </Link>
@@ -76,7 +81,9 @@ const AllMovies = () => {
         </h2>
 
         <button className="back-btn" onClick={() => navigate('/')}>
-          {language === 'Hindi' ? '← होम पर वापस जाएं' : '← Back To Home'}
+          {language === 'Hindi'
+            ? '← होम पर वापस जाएं'
+            : '← Back To Home'}
         </button>
       </div>
 

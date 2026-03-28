@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { BASE_URL, API_KEY } from '../data'; 
+import { BASE_URL, API_KEY } from '../data';
 import LanguageContext from '../contexts/LanguageContext';
 
 const Movies = () => {
@@ -25,6 +25,13 @@ const Movies = () => {
       );
 
       const data = await res.json();
+
+      // ✅ SAFE CHECK (VERY IMPORTANT)
+      if (!data || !data.results) {
+        setMovies([]);
+        setFilteredMovies([]);
+        return;
+      }
 
       setMovies(data.results);
       setFilteredMovies(data.results);
@@ -63,7 +70,9 @@ const Movies = () => {
         </h2>
 
         <button className="back-btn" onClick={() => navigate('/')}>
-          {language === 'Hindi' ? '← होम पर वापस जाएं' : '← Back To Home'}
+          {language === 'Hindi'
+            ? '← होम पर वापस जाएं'
+            : '← Back To Home'}
         </button>
       </div>
 
@@ -144,25 +153,7 @@ const Movies = () => {
                 </div>
 
                 {/* ▶ Hover Overlay */}
-                <div
-                  className="hover-overlay"
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    background: "rgba(0,0,0,0.6)",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    opacity: 0,
-                    transition: "opacity 0.3s ease",
-                    color: "white",
-                    fontSize: "20px",
-                    fontWeight: "bold"
-                  }}
-                >
+                <div className="hover-overlay">
                   ▶ Play
                 </div>
               </div>
