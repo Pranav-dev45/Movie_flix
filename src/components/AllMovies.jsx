@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { options, url } from '../data';
+import { BASE_URL, API_KEY } from '../data';
 import LanguageContext from '../contexts/LanguageContext';
 
 const AllMovies = () => {
@@ -14,14 +14,6 @@ const AllMovies = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MzE5OTZhOGMzZDYwYjQwMjBmZjE5MTZiYWVlOGZmNSIsIm5iZiI6MTc3NDYyNDQ1NC44MzksInN1YiI6IjY5YzY5ZWM2Mzk2NDYxMWNkMTA4YWJhMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JQBAJn7JmqQ7HXPqccItoxmYM-YOhollVSiRtf3cyF0',
-    },
-  };
 
   const fetchAllMovies = async () => {
     try {
@@ -30,10 +22,10 @@ const AllMovies = () => {
 
       const [nowPlayingRes, popularRes, topRatedRes, upcomingRes] =
         await Promise.all([
-          fetch(`${url}now_playing`, options),
-          fetch(`${url}popular`, options),
-          fetch(`${url}top_rated`, options),
-          fetch(`${url}upcoming`, options),
+          fetch(`${BASE_URL}now_playing?api_key=${API_KEY}`),
+          fetch(`${BASE_URL}popular?api_key=${API_KEY}`),
+          fetch(`${BASE_URL}top_rated?api_key=${API_KEY}`),
+          fetch(`${BASE_URL}upcoming?api_key=${API_KEY}`),
         ]);
 
       const nowPlayingData = await nowPlayingRes.json();

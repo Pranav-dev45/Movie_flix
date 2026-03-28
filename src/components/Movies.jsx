@@ -1,30 +1,31 @@
 import { useEffect, useState, useContext } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { options, url } from '../data';
-import { Link } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import { BASE_URL, API_KEY } from '../data'; 
 import LanguageContext from '../contexts/LanguageContext';
 
 const Movies = () => {
   const { movieCategory } = useParams();
   const navigate = useNavigate();
 
-  const [movies, setMovies] = useState([]); // Original Copy
-  const [filteredMovies, setFilteredMovies] = useState([]); // Display
+  const [movies, setMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [rating, setRating] = useState(0);
+
   const { language } = useContext(LanguageContext);
+
   const fetchMovies = async () => {
     try {
       setLoading(true);
       setError('');
-      const API_KEY = '931996a8c3d60b4020ff1916baee8ff5';
 
       const res = await fetch(
-        `https://api.themoviedb.org/3/movie/${movieCategory}?api_key=${API_KEY}`
+        `${BASE_URL}${movieCategory}?api_key=${API_KEY}`
       );
+
       const data = await res.json();
-      console.log(data);
+
       setMovies(data.results);
       setFilteredMovies(data.results);
     } catch (err) {
@@ -46,7 +47,9 @@ const Movies = () => {
     if (value === 0) {
       setFilteredMovies(movies);
     } else {
-      const updated = movies.filter((movie) => movie.vote_average >= value);
+      const updated = movies.filter(
+        (movie) => movie.vote_average >= value
+      );
       setFilteredMovies(updated);
     }
   };
@@ -63,8 +66,10 @@ const Movies = () => {
           {language === 'Hindi' ? '← होम पर वापस जाएं' : '← Back To Home'}
         </button>
       </div>
+
       <div className="movies-page">
-        {/* 🔹 Filter Row */}
+
+        {/* 🔹 Filter */}
         <div className="filter-container">
           <select
             value={rating}
@@ -80,7 +85,7 @@ const Movies = () => {
           </select>
         </div>
 
-        {/* 🔹 Loading Shimmer */}
+        {/* 🔹 Loading */}
         {loading && (
           <div className="movies-container">
             {[...Array(12)].map((_, index) => (
@@ -95,11 +100,15 @@ const Movies = () => {
         {/* 🔹 Movies */}
         {!loading && filteredMovies?.length > 0 && (
           <div className="movies-container">
-            {filteredMovies?.map((movie) => (
-              <div key={movie?.id} className="movie-card">
+            {filteredMovies.map((movie) => (
+              <div key={movie.id} className="movie-card">
                 <Link to={`/movie/${movie.id}`}>
                   <img
-                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                    src={
+                      movie.poster_path
+                        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                        : "https://via.placeholder.com/300x450"
+                    }
                     alt={movie.title}
                   />
                 </Link>
@@ -109,7 +118,7 @@ const Movies = () => {
         )}
 
         {/* 🔹 No Results */}
-        {!loading && !error && filteredMovies?.length === 0 && (
+        {!loading && !error && filteredMovies.length === 0 && (
           <p className="no-results">No Results Found</p>
         )}
       </div>

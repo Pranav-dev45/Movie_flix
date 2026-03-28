@@ -1,11 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { options } from '../data';
 import '../MovieDisplay.css';
-import { useContext } from 'react';
-
 import useOnlineStatus from '../hooks/useOnlineStatus';
 import LanguageContext from '../contexts/LanguageContext';
+import { API_KEY } from '../data'; //
 
 const MoviesDisplay = () => {
   const { movieId } = useParams();
@@ -17,14 +15,17 @@ const MoviesDisplay = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [play, setPlay] = useState(false);
+
   const { language } = useContext(LanguageContext);
+
   const fetchMovieDetails = async () => {
     try {
       setLoading(true);
+
       const res = await fetch(
-        `https://api.themoviedb.org/3/movie/${movieId}`,
-        options
+        `https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}`
       );
+
       const data = await res.json();
       setMovie(data);
     } catch {
@@ -37,16 +38,18 @@ const MoviesDisplay = () => {
   const fetchTrailer = async () => {
     try {
       const res = await fetch(
-        `https://api.themoviedb.org/3/movie/${movieId}/videos`,
-        options
+        `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${API_KEY}`
       );
+
       const data = await res.json();
 
-      const trailer = data.results.find(
+      const trailer = data.results?.find(
         (vid) => vid.type === 'Trailer' && vid.site === 'YouTube'
       );
 
-      if (trailer) setTrailerKey(trailer.key);
+      if (trailer) {
+        setTrailerKey(trailer.key);
+      }
     } catch {
       console.log('Trailer not found');
     }
@@ -63,8 +66,10 @@ const MoviesDisplay = () => {
         <h1 className="md-shimmer-text">MovieFlix</h1>
       </div>
     );
+
   if (error) return <p className="md-error">{error}</p>;
   if (onlineStatus === false) return <h1>Uhh! You are offline</h1>;
+
   return (
     <div className="md-page">
       <div className="md-head">
@@ -76,7 +81,9 @@ const MoviesDisplay = () => {
       <div
         className="md-hero"
         style={{
-          backgroundImage: `url(https://image.tmdb.org/t/p/original${movie?.backdrop_path})`,
+          backgroundImage: movie?.backdrop_path
+            ? `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`
+            : 'none',
         }}
       >
         <div className="md-hero-content">
@@ -85,7 +92,7 @@ const MoviesDisplay = () => {
 
           {trailerKey && (
             <button className="md-play-btn" onClick={() => setPlay(true)}>
-              ▶ {language === 'Hindi' ? 'चलाएँ"' : 'Play'}
+              ▶ {language === 'Hindi' ? 'चलाएँ' : 'Play'}
             </button>
           )}
         </div>

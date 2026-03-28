@@ -1,3 +1,4 @@
+
 export const movies = [
   {
     id: 1,
@@ -41,11 +42,13 @@ export const movies = [
   },
 ];
 
-export const url = 'https://api.themoviedb.org/3/movie/';
+export const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+
+export const BASE_URL = "https://api.themoviedb.org/3/movie/";
+
 export const options = {
-  method: 'GET',
+  method: "GET",
   headers: {
-    accept: 'application/json',
-    Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
+    accept: "application/json",
   },
 };
