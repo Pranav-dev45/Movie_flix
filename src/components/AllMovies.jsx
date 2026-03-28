@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { BASE_URL, API_KEY } from '../data';
 import LanguageContext from '../contexts/LanguageContext';
 
+
 const AllMovies = () => {
   const navigate = useNavigate();
   const { language } = useContext(LanguageContext);
@@ -42,6 +43,7 @@ const AllMovies = () => {
     } finally {
       setLoading(false);
     }
+    console.log("API KEY:", API_KEY);
   };
 
   useEffect(() => {

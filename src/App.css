@@ -184,3 +184,51 @@
   text-align: center;
   margin-top: 3rem;
 }
+
+.movie-card:hover .hover-overlay {
+  opacity: 1;
+}
+
+.movie-card:hover .movie-img {
+  transform: scale(1.05);
+}
+
+.movie-card {
+  position: relative;
+}
+
+.movie-img {
+  display: block;
+  width: 100%;
+  transition: transform 0.3s ease;
+}
+
+.hover-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+
+  opacity: 0;
+  transition: opacity 0.3s ease;
+
+  pointer-events: none;
+}
+
+.movie-card:hover .hover-overlay {
+  opacity: 1;
+}
+
+.movie-card:hover .movie-img {
+  transform: scale(1.05);
+}

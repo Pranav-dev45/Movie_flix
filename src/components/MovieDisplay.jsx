@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import '../MovieDisplay.css';
 import useOnlineStatus from '../hooks/useOnlineStatus';
 import LanguageContext from '../contexts/LanguageContext';
-import { API_KEY } from '../data'; //
+import { API_KEY } from '../data';
 
 const MoviesDisplay = () => {
   const { movieId } = useParams();

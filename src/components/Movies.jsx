@@ -101,7 +101,15 @@ const Movies = () => {
         {!loading && filteredMovies?.length > 0 && (
           <div className="movies-container">
             {filteredMovies.map((movie) => (
-              <div key={movie.id} className="movie-card">
+              <div
+                key={movie.id}
+                className="movie-card"
+                style={{
+                  position: "relative",
+                  overflow: "hidden",
+                  borderRadius: "10px"
+                }}
+              >
                 <Link to={`/movie/${movie.id}`}>
                   <img
                     src={
@@ -110,8 +118,53 @@ const Movies = () => {
                         : "https://via.placeholder.com/300x450"
                     }
                     alt={movie.title}
+                    style={{
+                      width: "100%",
+                      transition: "transform 0.3s ease"
+                    }}
+                    className="movie-img"
                   />
                 </Link>
+
+                {/* ⭐ Rating */}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "8px",
+                    right: "8px",
+                    background: "rgba(0,0,0,0.7)",
+                    color: "gold",
+                    padding: "4px 8px",
+                    borderRadius: "6px",
+                    fontSize: "12px",
+                    fontWeight: "bold"
+                  }}
+                >
+                  ⭐ {movie.vote_average?.toFixed(1) || "N/A"}
+                </div>
+
+                {/* ▶ Hover Overlay */}
+                <div
+                  className="hover-overlay"
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    background: "rgba(0,0,0,0.6)",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    opacity: 0,
+                    transition: "opacity 0.3s ease",
+                    color: "white",
+                    fontSize: "20px",
+                    fontWeight: "bold"
+                  }}
+                >
+                  ▶ Play
+                </div>
               </div>
             ))}
           </div>
